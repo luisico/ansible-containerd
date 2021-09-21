@@ -1,0 +1,5 @@
+---
+containerd_packages_version: '{{ "" if containerd_version == "latest" else ("-" + containerd_version) }}'
+containerd_packages_state: '{{ "latest" if containerd_version == "latest" else "present" }}'
+containerd_packages:
+  - containerd.io{{ containerd_packages_version }}

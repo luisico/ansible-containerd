@@ -1,0 +1,7 @@
+---
+# Containerd version
+# To install the latest patch for a minor version use something like '1.4.*'
+containerd_version: latest
+
+# Use systemd cgroups for CRI
+containerd_systemd: yes

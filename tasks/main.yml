@@ -1,0 +1,37 @@
+---
+- name: Add docker repository
+  yum_repository:
+    name: docker-ce
+    description: 'Docker CE Stable'
+    baseurl: https://download.docker.com/linux/centos/7/$basearch/stable
+    enabled: 0
+    gpgcheck: 1
+    gpgkey: https://download.docker.com/linux/centos/gpg
+
+- name: Install containerd {{ containerd_version }}
+  yum:
+    name: '{{ containerd_packages }}'
+    state: '{{ containerd_packages_state }}'
+    enablerepo: docker-ce
+    allow_downgrade: yes
+  notify: Restart containerd
+
+- name: Get default configuration
+  command: containerd config default
+  register: containerd__r_default_config
+  changed_when: no
+
+- name: Configure containerd with CRI
+  template:
+    dest: /etc/containerd/config.toml
+    src: config.toml.j2
+    mode: 0644
+    owner: root
+    group: root
+  notify: Restart containerd
+
+- name: Enable service
+  service:
+    name: containerd
+    state: started
+    enabled: yes
