@@ -4,8 +4,8 @@
     name: docker-ce
     description: 'Docker CE Stable'
     baseurl: https://download.docker.com/linux/centos/7/$basearch/stable
-    enabled: 0
-    gpgcheck: 1
+    enabled: '0'
+    gpgcheck: '1'
     gpgkey: https://download.docker.com/linux/centos/gpg
 
 - name: Install containerd {{ containerd_version }}
@@ -13,13 +13,13 @@
     name: '{{ containerd_packages }}'
     state: '{{ containerd_packages_state }}'
     enablerepo: docker-ce
-    allow_downgrade: yes
+    allow_downgrade: true
   notify: Restart containerd
 
 - name: Get default configuration
   command: containerd config default
   register: containerd__r_default_config
-  changed_when: no
+  changed_when: false
 
 - name: Configure containerd with CRI
   template:
@@ -34,4 +34,4 @@
   service:
     name: containerd
     state: started
-    enabled: yes
+    enabled: true

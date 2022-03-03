@@ -4,4 +4,4 @@
 containerd_version: latest
 
 # Use systemd cgroups for CRI
-containerd_systemd: yes
+containerd_systemd: true

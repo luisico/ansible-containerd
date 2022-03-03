@@ -34,6 +34,8 @@ TODO
 License
 -------
 
+MIT
+
 Author Information
 ------------------
 Luis Gracia while at [Rockefeller University](http://www.rockefeller.edu):
