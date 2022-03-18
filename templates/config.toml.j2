@@ -1,6 +1,0 @@
-{% for line in containerd__r_default_config.stdout_lines %}
-{{ line }}
-{% if containerd_systemd and '[plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]' in line %}
-            SystemdCgroup = true
-{% endif %}
-{% endfor %}

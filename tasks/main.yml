@@ -16,15 +16,19 @@
     allow_downgrade: true
   notify: Restart containerd
 
-- name: Get default configuration
-  command: containerd config default
-  register: containerd__r_default_config
-  changed_when: false
-
-- name: Configure containerd with CRI
-  template:
+- name: Configure containerd with defaults and local imports
+  copy:
     dest: /etc/containerd/config.toml
-    src: config.toml.j2
+    src: config.toml
+    mode: 0644
+    owner: root
+    group: root
+  notify: Restart containerd
+
+- name: Configure containerd with CRI and SystemdCgroup
+  copy:
+    dest: /etc/containerd/local_systemd.toml
+    src: local_systemd.toml
     mode: 0644
     owner: root
     group: root
